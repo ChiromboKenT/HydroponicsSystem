@@ -1,5 +1,5 @@
 const dataPin = 5;
-const dht =  require('dht')
+const dht =  require('pigpio-dht')
 const sensor = dht(dataPin, 11);
 
 
