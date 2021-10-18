@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "sudo node src/index.js"
+    "dev": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/ChiromboKenT/HydroponicsSystem#readme",
   "dependencies": {
-    "node-dht-sensor": "^0.4.3",
     "pigpio-dht": "^1.1.1"
   }
 }
