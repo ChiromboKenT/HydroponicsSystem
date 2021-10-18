@@ -16,4 +16,13 @@ sensor.on('badChecksum', () => {
     console.log('checksum failed');
 });
 
+ const close =  () => {
+    try{
+       
+       console.log("Exit");
+      }
+      catch(err){
+          console.log(err);
+      }
+ }
 process.on("SIGINT", close);
