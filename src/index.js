@@ -8,7 +8,7 @@ const pwm = require('raspi-soft-pwm');
 
 raspi.init(() => {
   const fan = new pwm.SoftPWM('GPIO17');
-  led.write(0.2); // 50% Duty Cycle, aka half brightness
+  fan.write(0.2); // 50% Duty Cycle, aka half brightness
 });
 
 //DefineIntervals
