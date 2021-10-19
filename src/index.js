@@ -3,7 +3,7 @@ const mcpadc = require("mcp-spi-adc")
 const dhtSensor =  require('node-dht-sensor')
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
- 
+let Cycle = 20; 
 
 
 raspi.init(() => {
@@ -11,6 +11,18 @@ raspi.init(() => {
   fan.write(0.2); // 50% Duty Cycle, aka half brightness
 });
 
+const IncreaseDuty = (duty) => {
+	fan.write(duty/10);
+} 
+
+let dutyInterval = setInterval(() => {
+	IncreaseDuty(Cycle);
+	if((Cycle + 20) > 100){
+		Cycle = 0;
+	}else{
+		Cycle += 20;
+	}
+}, 5000);
 //DefineIntervals
 let WLInterval;
 let DHTInterval;
@@ -55,6 +67,7 @@ DHTInterval = setInterval(() => {
 		clearInterval(DHTInterval);
 		clearInterval(TDSInterval);
 		clearInterval(WLInterval);
+		clearInterval(dutyInterval);
        	console.log("Exit");
 
       }
