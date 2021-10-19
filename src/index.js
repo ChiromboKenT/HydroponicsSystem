@@ -8,7 +8,7 @@ let Cycle = 20;
 
 const changeFanDuty = raspi.init(() => {
   const fan = new pwm.SoftPWM('GPIO17');
-  fan.write(Cycle/10); // 50% Duty Cycle, aka half brightness
+  fan.write(Cycle/100); // 50% Duty Cycle, aka half brightness
 });
 
 
