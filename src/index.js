@@ -1,6 +1,15 @@
 const dataPin = 5;
 const mcpadc = require("mcp-spi-adc")
 const dhtSensor =  require('node-dht-sensor')
+const raspi = require('raspi');
+const pwm = require('raspi-soft-pwm');
+ 
+
+
+raspi.init(() => {
+  const fan = new pwm.SoftPWM('GPIO17');
+  led.write(0.2); // 50% Duty Cycle, aka half brightness
+});
 
 //DefineIntervals
 let WLInterval;
@@ -24,7 +33,7 @@ const TDSReading = mcpadc.open(6, {speedHz: 20000}, err => {
 		TDSReading.read((err, reading) => {
 		if (err) throw err;
 
-		console.log(`TDS: ${(reading.value * 3.3 - 0.5) * 100}`);
+		console.log(`TDS: ${(reading.value * 3.3 - 0.5) * 100 + 50}`);
 		});
 	}, 1000);
 });
