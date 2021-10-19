@@ -12,7 +12,6 @@ const changeFanDuty = raspi.init(() => {
 });
 
 
-changeFanDuty();
 let dutyInterval = setInterval(() => {
 	changeFanDuty();
 	if((Cycle + 20) > 100){
