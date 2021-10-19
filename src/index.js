@@ -6,17 +6,15 @@ const pwm = require('raspi-soft-pwm');
 let Cycle = 20; 
 
 
-raspi.init(() => {
+const changeFanDuty = raspi.init((duty) => {
   const fan = new pwm.SoftPWM('GPIO17');
-  fan.write(0.2); // 50% Duty Cycle, aka half brightness
+  fan.write(duty/10); // 50% Duty Cycle, aka half brightness
 });
 
-const IncreaseDuty = (duty) => {
-	fan.write(duty/10);
-} 
+
 
 let dutyInterval = setInterval(() => {
-	IncreaseDuty(Cycle);
+	changeFanDuty(Cycle);
 	if((Cycle + 20) > 100){
 		Cycle = 0;
 	}else{
