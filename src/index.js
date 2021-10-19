@@ -65,7 +65,7 @@ DHTInterval = setInterval(() => {
     try{
        
 		raspi.init(() => {
-			const fan = new pwm.SoftPWM({pin:'GPIO17',frequency:30});
+			const fan = new pwm.SoftPWM({pin:'GPIO17',frequency:5});
 			fan.write(0); // 50% Duty Cycle, aka half brightness
 		  });
 		clearInterval(DHTInterval);
