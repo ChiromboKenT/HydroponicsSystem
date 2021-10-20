@@ -15,7 +15,7 @@ let fan;
 const tempPin = 4;
 const WaterLevelChannel = 7
 const TDSChannel = 6;
-const phChannel = 5
+const phChannel = 4
 
 //Define TempSensor
 const dht11 = new TempSensor(tempPin,11)
