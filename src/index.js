@@ -7,7 +7,6 @@ const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
 const events = require("events");
 const {TempSensor} = require("./TempSensor.js")
-const AnalogSensor = require("./AnalogSensors")
 
 //Define GPIO Pins
 let Cycle = 100;
@@ -15,17 +14,10 @@ let fan;
 const tempPin = 4;
 const WaterLevelChannel = 7
 const TDSChannel = 6;
-const phChannel = 4
+const phChannel = 5
 
 //Define TempSensor
 const dht11 = new TempSensor(tempPin,11)
-
-//Define WaterLevelSensor
-const waterLevel = new AnalogSensor(WaterLevelChannel);
-//Define TDSSensor 
-const TDSsensor = new AnalogSensor(TDSChannel)
-//Define PhSensor
-const pHSensor = new AnalogSensor(phChannel)
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
@@ -61,33 +53,38 @@ DHTInterval = setInterval(async () => {
 
 }, 3000); // the sensor can only be red every 2 seconds
  
-WLInterval = setInterval(async () => {
-	try{
-		const WaterLevel = await waterLevel.GetReading()
-		console.log(`Water Level@  ${WaterLevel}`)
-	}catch(err){
-		console.log(err)
-	}
-}, 3000);
+const WaterLevelMeter = mcpadc.open(WaterLevelChannel, {speedHz: 20000}, err => {
+	if (err) throw err;
+	WLInterval = setInterval(_ => {
+		WaterLevelMeter.read((err, reading) => {
+		if (err) throw err;
+			
+		console.log(`Water Level: ${(reading.value * 3.3 - 0.5) * 100}`);
+	  });
+	}, 1000);
+  });
 
+  const TDSReading = mcpadc.open(TDSChannel, {speedHz: 20000}, err => {
+	if (err) throw err;
+	TDSInterval = setInterval(_ => {
+		TDSReading.read((err, reading) => {
+		if (err) throw err;
+			
+		console.log(`TDS Level: ${(reading.value * 3.3 - 0.5) * 100 + 50}`);
+	  });
+	}, 1000);
+  });
 
-TDSInterval = setInterval (async() => {
-	try{
-		const TDSReading = await TDSsensor.GetReading()
-		console.log(`TDS@  ${TDSReading + 50}`)
-	}catch(err){
-		console.log(err)
-	}
-},3000)
-
-PhInterval = setInterval(async () => {
-	try{
-		const pHReading = await pHSensor.GetReading()
-		console.log(`PH Value: ${pHReading}`)
-	}catch(err){
-		console.log(err)
-	}
-},3000)
+  const pHReading = mcpadc.open(phChannel, {speedHz: 20000}, err => {
+	if (err) throw err;
+	PhInterval = setInterval(_ => {
+		pHReading.read((err, reading) => {
+		if (err) throw err;
+			
+		console.log(`PH Reading: ${(reading.value * 3.3 - 0.5) * 100}`);
+	  });
+	}, 1000);
+  });
 
 
 
