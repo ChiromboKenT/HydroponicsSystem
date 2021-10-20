@@ -7,7 +7,7 @@ class TempSensor {
         this.SensorType = SensorType; 
         this.eventEmmiter = new EventEmitter()
         this.eventEmmiter.on("Read", (Value) => {
-            if((Value.Temperature > 18) && (Value.Temperature < 26)){
+            if((Value.Temperature >= 23)){
                 this.eventEmmiter.emit('Fan ON');
             } else{
                 this.eventEmmiter.emit('Fan OFF');
