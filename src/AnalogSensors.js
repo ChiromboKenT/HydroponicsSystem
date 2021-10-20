@@ -8,7 +8,7 @@ class AnalogSensor {
     GetReading(){
         return new Promise((resolve, reject) => {
             try{
-                sensor.read((err, reading) => {
+                this.sensor.read((err, reading) => {
                     if (err) throw err;
                     console.log(`ANALOG PRINT: ${reading}`)
                     resolve((reading.value * 3.3 - 0.5) * 100)
