@@ -49,8 +49,13 @@ let DHTInterval;
 let TDSInterval;
 
 DHTInterval = setInterval(async () => { 
-	const {Temperature,Humidity} = await dht11.Read();
-	console.log(`Outside Temp: ${Temperature} ---- Outside Humidity: ${Humidity}`)
+	try{
+		const {Temperature,Humidity} = await dht11.Read();
+		console.log(`Outside Temp: ${Temperature} ---- Outside Humidity: ${Humidity}`)
+	}
+	catch(err){
+		console.log(err)
+	}
 
 }, 1500); // the sensor can only be red every 2 seconds
  
