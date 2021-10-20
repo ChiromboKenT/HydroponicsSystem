@@ -2,7 +2,7 @@ const mcpadc = require("mcp-spi-adc")
 
 class AnalogSensor {
     constructor(Channel){
-        this.ASensor = mcpadc.open(Channel, {speedHz: 20000},GetReading)
+        this.ASensor = mcpadc.open(Channel, {speedHz: 20000},this.GetReading)
     }
     GetReading(){
         return new Promise((resolve, reject) => {
