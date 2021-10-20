@@ -15,6 +15,7 @@ let fan;
 const tempPin = 4;
 const WaterLevelChannel = 7
 const TDSChannel = 6;
+const phChannel = 5
 
 //Define TempSensor
 const dht11 = new TempSensor(tempPin,11)
@@ -23,6 +24,8 @@ const dht11 = new TempSensor(tempPin,11)
 const waterLevel = new AnalogSensor(WaterLevelChannel);
 //Define TDSSensor 
 const TDSsensor = new AnalogSensor(TDSChannel)
+//Define PhSensor
+const pHSensor = new AnalogSensor(phChannel)
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
@@ -45,6 +48,7 @@ dht11.eventEmmiter.on("Fan OFF", () => {
 let WLInterval;
 let DHTInterval;
 let TDSInterval;
+let PhInterval;
 
 DHTInterval = setInterval(async () => { 
 	try{
@@ -76,6 +80,15 @@ TDSInterval = setInterval (async() => {
 	}
 },2000)
 
+PhInterval = setInterval(async () => {
+	try{
+		const pHReading = await pHSensor.GetReading()
+		console.log(`PH Value: ${pHReading}`)
+	}catch(err){
+		console.log(err)
+	}
+})
+
 
 
  const close =  () => {
@@ -85,6 +98,7 @@ TDSInterval = setInterval (async() => {
 		clearInterval(DHTInterval);
 		clearInterval(TDSInterval);
 		clearInterval(WLInterval);
+		clearInterval(PhInterval);
        	console.log("Exit");
 
       }
