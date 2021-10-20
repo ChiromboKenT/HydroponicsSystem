@@ -59,7 +59,7 @@ DHTInterval = setInterval(async () => {
 		console.log(err)
 	}
 
-}, 2000); // the sensor can only be red every 2 seconds
+}, 3000); // the sensor can only be red every 2 seconds
  
 WLInterval = setInterval(async () => {
 	try{
@@ -68,7 +68,7 @@ WLInterval = setInterval(async () => {
 	}catch(err){
 		console.log(err)
 	}
-}, 2000);
+}, 3000);
 
 
 TDSInterval = setInterval (async() => {
@@ -78,7 +78,7 @@ TDSInterval = setInterval (async() => {
 	}catch(err){
 		console.log(err)
 	}
-},2000)
+},3000)
 
 PhInterval = setInterval(async () => {
 	try{
@@ -87,7 +87,7 @@ PhInterval = setInterval(async () => {
 	}catch(err){
 		console.log(err)
 	}
-})
+},3000)
 
 
 
