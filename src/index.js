@@ -2,19 +2,24 @@ const dataPin = 5;
 const mcpadc = require("mcp-spi-adc")
 const Gpio = require('onoff').Gpio;
 
+
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
 const events = require("events");
 const {TempSensor} = require("./TempSensor.js")
-
+const AnalogSensor = require("./AnalogSensors")
 
 //Define GPIO Pins
 let Cycle = 100;
 let fan;
 const tempPin = 4;
+const WaterLevelChannel = 7 
 
 //Define TempSensor
 const dht11 = new TempSensor(tempPin,11)
+
+//Define WaterLevelSensor
+const waterLevel = new AnalogSensor(WaterLevelChannel);
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
@@ -49,27 +54,14 @@ DHTInterval = setInterval(async () => {
 
 }, 1500); // the sensor can only be red every 2 seconds
  
-const WaterLevelMeter = mcpadc.open(7, {speedHz: 20000}, err => {
-	if (err) throw err;
-	WLInterval = setInterval(_ => {
-		WaterLevelMeter.read((err, reading) => {
-		if (err) throw err;
-			
-		console.log(`Water Level: ${(reading.value * 3.3 - 0.5) * 100}`);
-	  });
-	}, 1000);
-  });
-
-const TDSReading = mcpadc.open(6, {speedHz: 20000}, err => {
-	if (err) throw err;
-	TDSInterval = setInterval(_ => {
-		TDSReading.read((err, reading) => {
-		if (err) throw err;
-
-		console.log(`TDS: ${(reading.value * 3.3 - 0.5) * 100 + 50}`);
-		});
-	}, 1000);
-});
+WLInterval = setInterval(async () => {
+	try{
+		const WaterLevel = await waterLevel.GetReading()
+		console.log(`Water Level@  ${WaterLevel}`)
+	}catch(err){
+		console.log(err)
+	}
+}, 1000);
 
 
 

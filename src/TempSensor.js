@@ -9,8 +9,10 @@ class TempSensor {
         this.eventEmmiter.on("Read", (Value) => {
             if((Value.Temperature >= 23)){
                 this.eventEmmiter.emit('Fan ON');
+                console.log("Fan Turned ON");
             } else{
                 this.eventEmmiter.emit('Fan OFF');
+                console.log("Fan Turned OFF");
             }
         })       
     }
