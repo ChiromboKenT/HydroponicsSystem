@@ -9,7 +9,7 @@ class AnalogSensor {
             try{
                 this.ASensor.read((err, reading) => {
                     if (err) throw err;
-                    console.log(`ANALOG PRINT: ${reading.JSON()}`)
+                    console.log(`ANALOG PRINT: ${reading}`)
                     resolve((reading.value * 3.3 - 0.5) * 100)
                 })
             }catch(err){
