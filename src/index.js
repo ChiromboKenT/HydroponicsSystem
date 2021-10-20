@@ -11,7 +11,7 @@ let Cycle = 10;
 let fan;
 
 raspi.init(() => {
-	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:60});
+	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
 	 // 50% Duty Cycle, aka half brightness
   });
 
