@@ -12,11 +12,12 @@ let fan;
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:30});
+	fan.write(Cycle/100); // 50% Duty Cycle, aka half brightness
   });
 
 
 let dutyInterval = setInterval(() => {
-	fan.write(Cycle/100); // 50% Duty Cycle, aka half brightness
+	
 	if((Cycle + 10) > 100){
 		Cycle = 10;
 	}else{
