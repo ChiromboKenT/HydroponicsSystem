@@ -7,7 +7,7 @@ class AnalogSensor {
     GetReading(){
         return new Promise((resolve, reject) => {
             try{
-                sensor =  mcpadc.open(this.Channel, {speedHz: 20000},() =>{
+                const sensor =  mcpadc.open(this.Channel, {speedHz: 20000},() =>{
                     sensor.read((err, reading) => {
                         if (err) throw err;
                         console.log(`ANALOG PRINT: ${reading}`)
