@@ -9,7 +9,7 @@ const {TempSensor} = require("./TempSensor.js")
 
 
 //Define GPIO Pins
-let Cycle = 80;
+let Cycle = 100;
 let fan;
 const tempPin = 4;
 
@@ -33,16 +33,6 @@ dht11.eventEmmiter.on("Fan OFF", () => {
 
 
 
-
-
-let dutyInterval = setInterval(() => {
-	fan.write(Cycle/100);
-	if((Cycle + 10) > 100){
-		Cycle = 10;
-	}else{
-		Cycle += 10;
-	}
-}, 2500);
 //DefineIntervals
 let WLInterval;
 let DHTInterval;
@@ -90,7 +80,6 @@ const TDSReading = mcpadc.open(6, {speedHz: 20000}, err => {
 		clearInterval(DHTInterval);
 		clearInterval(TDSInterval);
 		clearInterval(WLInterval);
-		clearInterval(dutyInterval);
        	console.log("Exit");
 
       }
