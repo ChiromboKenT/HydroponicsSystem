@@ -19,7 +19,7 @@ class TempSensor {
     Read(){
         const ReadingValue = new Promise((resolve,reject) => {
             try{
-                dhtSensor.read(SensorType,this.SensorPin, (err,temperature,humidity) => {
+                dhtSensor.read(this.SensorType,this.SensorPin, (err,temperature,humidity) => {
                     if(err) throw `Sensor Error -> ${err}`
                     Data = {
                         Temperature: temperature,
