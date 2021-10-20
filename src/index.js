@@ -14,7 +14,7 @@ let fan;
 const tempPin = 4;
 
 //Define TempSensor
-const dht11 = TempSensor(tempPin,11)
+const dht11 = new TempSensor(tempPin,11)
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
