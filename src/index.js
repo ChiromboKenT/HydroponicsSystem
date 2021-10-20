@@ -1,22 +1,22 @@
 const dataPin = 5;
 const mcpadc = require("mcp-spi-adc")
+const Gpio = require('onoff').Gpio;
 const dhtSensor =  require('node-dht-sensor')
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
-let Cycle = 10; 
+const events = require("events");
+
+//Define GPIO Pins
+let Cycle = 10;
+let fan;
 
 raspi.init(() => {
-	const fan = new pwm.SoftPWM({pin:'GPIO17',frequency:30});
-	fan.write(Cycle/100); // 50% Duty Cycle, aka half brightness
+	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:30});
   });
 
 
 let dutyInterval = setInterval(() => {
-	raspi.init(() => {
-		const fan = new pwm.SoftPWM({pin:'GPIO17',frequency:30});
-		fan.write(Cycle/100); // 50% Duty Cycle, aka half brightness
-	  });
-	  
+	fan.write(Cycle/100); // 50% Duty Cycle, aka half brightness
 	if((Cycle + 10) > 100){
 		Cycle = 10;
 	}else{
@@ -65,7 +65,7 @@ DHTInterval = setInterval(() => {
     try{
        
 		raspi.init(() => {
-			const fan = new pwm.SoftPWM({pin:'GPIO17',frequency:5});
+			const fan = new pwm.SoftPWM({pin:'GPIO17',frequency:40});
 			fan.write(0); // 50% Duty Cycle, aka half brightness
 		  });
 		clearInterval(DHTInterval);
