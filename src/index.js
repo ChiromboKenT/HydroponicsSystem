@@ -22,7 +22,7 @@ const dht11 = new TempSensor(tempPin,11)
 //Define WaterLevelSensor
 const waterLevel = new AnalogSensor(WaterLevelChannel);
 //Define TDSSensor 
-const TDSReading = new AnalogSensor(TDSChannel)
+const TDSsensor = new AnalogSensor(TDSChannel)
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
@@ -69,7 +69,7 @@ WLInterval = setInterval(async () => {
 
 TDSInterval = setInterval (async() => {
 	try{
-		const TDSReading = await TDSReading.GetReading()
+		const TDSReading = await TDSsensor.GetReading()
 		console.log(`TDS@  ${TDSReading + 50}`)
 	}catch(err){
 		console.log(err)
