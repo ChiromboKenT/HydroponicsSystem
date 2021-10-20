@@ -2,15 +2,17 @@ const mcpadc = require("mcp-spi-adc")
 
 class AnalogSensor {
     constructor(Channel){
-        this.ASensor = mcpadc.open(Channel, {speedHz: 20000},this.GetReading)
+        this.Channel =  Channel
     }
     GetReading(){
         return new Promise((resolve, reject) => {
             try{
-                this.ASensor.read((err, reading) => {
-                    if (err) throw err;
-                    console.log(`ANALOG PRINT: ${reading}`)
-                    resolve((reading.value * 3.3 - 0.5) * 100)
+                this.ASensor =  mcpadc.open(this.Channel, {speedHz: 20000},() =>{
+                    this.ASensor.read((err, reading) => {
+                        if (err) throw err;
+                        console.log(`ANALOG PRINT: ${reading}`)
+                        resolve((reading.value * 3.3 - 0.5) * 100)
+                    })
                 })
             }catch(err){
                 reject(`Analog Sensor Error: ${err}`)
