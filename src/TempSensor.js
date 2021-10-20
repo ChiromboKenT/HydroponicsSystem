@@ -21,7 +21,7 @@ class TempSensor {
             try{
                 dhtSensor.read(this.SensorType,this.SensorPin, (err,temperature,humidity) => {
                     if(err) throw `Sensor Error -> ${err}`
-                    Data = {
+                    const Data = {
                         Temperature: temperature,
                         Humidity : humidity
                     }
