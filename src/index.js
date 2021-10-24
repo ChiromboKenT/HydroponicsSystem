@@ -132,7 +132,7 @@ const swithOutletPump = (state) => {
 	outletPump.writeSync(state);
 	flowState.outlet = state
 }
-const swithvalve = (state) => {
+const swithOutletValve = (state) => {
 	valve.writeSync(state);	
 	flowState.valve = state
 }
