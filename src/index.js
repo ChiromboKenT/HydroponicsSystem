@@ -14,6 +14,7 @@ const {TempSensor} = require("./TempSensor.js")
 	 outlet : 0,
 	 valve : 0
  }
+ switchOff()
 
 const NutrientTrigger = 0;
 
