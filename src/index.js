@@ -13,10 +13,7 @@ const {TempSensor} = require("./TempSensor.js")
 	 inlet : 0,
 	 outlet : 0,
 	 valve : 0
- }
- inletPump.writeSync(flowState.inlet);
- outletPump.writeSync(flowState.outlet);
- valve.writeSync(flowState.valve);	
+ }	
 
 const NutrientTrigger = 0;
 
@@ -51,6 +48,9 @@ dht11.eventEmmiter.on("Fan OFF", () => {
 
 
 
+inletPump.writeSync(flowState.inlet);
+outletPump.writeSync(flowState.outlet);
+valve.writeSync(flowState.valve);
 //DefineIntervals
 let WLInterval;
 let DHTInterval;
