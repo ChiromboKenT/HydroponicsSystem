@@ -11,8 +11,8 @@ const {TempSensor} = require("./TempSensor.js")
 //Define Pump State
  const flowState = {
 	 inlet : 1,
-	 outlet : 1,
-	 valve : 1
+	 outlet : 0,
+	 valve : 0
  }	
 
 const NutrientTrigger = 0;
