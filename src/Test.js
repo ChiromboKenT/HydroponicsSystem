@@ -8,7 +8,7 @@ luxValue = [0.9,1,0.8,0.7,0.8,0.6,0.6,0.6,0.7]
 
 luxValue.forEach(element => {
     
-    console.log(`Current LUX: ${element}mm`)
+    console.log(`Current Illuminance: ${element}LUX`)
     if(element < 1){
         console.log(`Grow Lights: ON`)
     }else{
