@@ -11,7 +11,10 @@ hum = [80,78,74,73,74,70,67,68,60,58,58,60]
 temp.forEach((element,indx) => {
     
     console.log(`Current Avg Temperature: ${element}°C    Current Avg Humidity: ${hum[indx]}%`)
-    if(element >= 25 && hum[indx] < 70){
+    if(element < 25){
+        console.log("Cooling Fans: OFF")
+    }
+    else if(element >= 25 && hum[indx] < 70){
         console.log(`Cooling Fans: ON`)
     }else{
         console.log("Cooling Fans: OFF")
