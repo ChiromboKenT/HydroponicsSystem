@@ -23,7 +23,7 @@ const outletPump = new Gpio(20, 'out');
 const valve = new Gpio(21, 'out');
 
 inletPump.writeSync(0);
-
+outletPump.writeSync(0)
 
  const close =  () => {
     try{
