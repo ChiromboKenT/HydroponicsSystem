@@ -18,7 +18,7 @@ const {TempSensor} = require("./TempSensor.js")
 
 //Define GPIO Pins
 
-const inletPump  = new Gpio(16, 'out');
+const inletPump  = new Gpio(26, 'out');
 const outletPump = new Gpio(20, 'out');
 const valve = new Gpio(21, 'out');
 
