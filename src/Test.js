@@ -24,7 +24,15 @@ const valve = new Gpio(21, 'out');
 
 inletPump.writeSync(0);
 outletPump.writeSync(0)
+let count = 0;
 
+const countInterval = setInterval(() => {
+    count ++;
+    if(count % 3 == 0){
+        console.log(count)
+        inletPump.writeSync(1);
+    }
+}, 1000)
  const close =  () => {
     try{
 		
@@ -38,6 +46,6 @@ outletPump.writeSync(0)
  }
 
 while(1){
-    
+    clearInterval(countInterval);
 }
 process.on("SIGINT", close);
