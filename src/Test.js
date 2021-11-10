@@ -45,7 +45,5 @@ const countInterval = setInterval(() => {
       }
  }
 
-while(1){
-    
-}
+
 process.on("SIGINT", close);
