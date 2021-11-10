@@ -32,11 +32,11 @@ const countInterval = setInterval(() => {
         console.log(count)
         inletPump.writeSync(1);
     }
-}, 1000)
+}, 1500)
  const close =  () => {
     try{
 		
-		
+		clearInterval(countInterval);
        	console.log("Exit");
 
       }
@@ -46,6 +46,6 @@ const countInterval = setInterval(() => {
  }
 
 while(1){
-    clearInterval(countInterval);
+    
 }
 process.on("SIGINT", close);
