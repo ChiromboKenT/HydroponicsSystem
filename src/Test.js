@@ -36,4 +36,8 @@ outletPump.writeSync(0)
         console.log(err);
       }
  }
+
+while(1){
+    
+}
 process.on("SIGINT", close);
