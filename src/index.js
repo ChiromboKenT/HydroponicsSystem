@@ -10,7 +10,7 @@ const {TempSensor} = require("./TempSensor.js")
 
 //Define Pump State
  const flowState = {
-	 inlet : 1,
+	 inlet : 0,
 	 outlet : 0,
 	 valve : 0
  }	
@@ -24,9 +24,9 @@ const tempPin = 4;
 const WaterLevelChannel = 7
 const TDSChannel = 6;
 const phChannel = 5
-const inletPump  = new Gpio(16, 'out');
-const outletPump = new Gpio(20, 'out');
-const valve = new Gpio(21, 'out');
+const inletPump  = new Gpio(26, 'out'); //Channel 1
+const outletPump = new Gpio(20, 'out');	//Channel 2
+const valve = new Gpio(21, 'out');		//Channel 3
 
 //Define TempSensor
 const dht11 = new TempSensor(tempPin,11)
