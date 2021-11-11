@@ -83,7 +83,7 @@ const swithOutletValve = (state) => {
 
 client.on("connect",() => {
 	console.log("Connected");
-	client.subscribe(["raspi-ken/lights", "raspi-ken/fan"], () => {
+	client.subscribe(["raspi-ken/lights", "raspi-ken/fan","raspi-ken/outlet","raspi-ken/inlet"], () => {
 		console.log("Subscribed to topicPH");
 	})
 	client.publish(topicPH, "6.4" , {qos:1,retain:true}, (error) => {
@@ -234,9 +234,13 @@ client.on("connect",() => {
 
 client.on("message", (topic,payload) => {
 	console.log(`Message Received: ${topic}: ${payload}`);
-
+	const payState = payload == "true" ? 1 : 0
 	if(topic == "raspi-ken/inlet"){
-		swithInletPump(payload)
+		swithInletPump(payState)
+	}else if(topic == "raspi-ken/outlet"){
+		swithOutletPump(payState)
+	}else if(topic == "raspi-ken/fan"){
+		fan.write(payState)
 	}
 	controlState = 1;
 	UCInterval = setTimeout(() => {
