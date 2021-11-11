@@ -82,8 +82,8 @@ outletPump.writeSync(0);
 //Temp Sensor
 DHTInterval = setInterval(async () => { 
 	try{
-		const {Temperature,Humidity} = await dht11.Read();
-		console.log(`Outside Temp: ${Temperature} ---- Outside Humidity: ${Humidity}`)
+		// const {Temperature,Humidity} = await dht11.Read();
+		// console.log(`Outside Temp: ${Temperature} ---- Outside Humidity: ${Humidity}`)
 	}
 	catch(err){
 		console.log(err)
