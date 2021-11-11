@@ -2,6 +2,7 @@ const dataPin = 5;
 const mcpadc = require("mcp-spi-adc")
 const Gpio = require('onoff').Gpio;
 const dhtSensor =  require('node-dht-sensor').promises
+import process from 'process';
 
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
@@ -113,7 +114,7 @@ const TDSReading = mcpadc.open(TDSChannel, {speedHz: 20000}, err => {
 		if (err) throw err;
 		const tdsVal = (reading.value * 3.3 - 0.5) * 100 + 50;
 		console.log(`TDS Level: ${tdsVal}`);
-		if(tdsVal <= 150){
+		if(tdsVal <= 30){
 			console.log("OUTLET VALVE ON")
 			swithOutletValve(relayON);
 			console.log("OUTLET Pump ON");
@@ -158,5 +159,9 @@ const close =  () => {
         console.log(err);
       }
  }
+
+ process.on('beforeExit', (code) => {
+	console.log('Process beforeExit event with code: ', code);
+  });
 process.stdin.resume();
 process.on("SIGINT", close);
