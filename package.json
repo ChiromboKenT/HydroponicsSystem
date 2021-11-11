@@ -20,7 +20,9 @@
   "homepage": "https://github.com/ChiromboKenT/HydroponicsSystem#readme",
   "dependencies": {
     "mcp-spi-adc": "^3.2.0",
+    "mqtt": "^4.2.8",
     "node-dht-sensor": "^0.4.3",
+    "onoff": "^6.0.3",
     "pigpio-dht": "^1.1.1",
     "raspi-soft-pwm": "^6.0.2"
   }
