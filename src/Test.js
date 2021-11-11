@@ -15,6 +15,8 @@ const tempPin = 4;
 const WaterLevelChannel = 7
 const TDSChannel = 6;
 const phChannel = 5
+const relayOFF = 1;
+const relayON = 0;
 
 //Define TempSensor
 
@@ -58,9 +60,9 @@ const outletPump = new Gpio(20, 'out');	//Channel 2
 const valve = new Gpio(21, 'out');		//Channel 3
 
 
-inletPump.writeSync(0);
-outletPump.writeSync(0);
-valve.writeSync(0);
+inletPump.writeSync(relayOFF);
+outletPump.writeSync(relayOFF);
+valve.writeSync(relayOFF);
 
 
  const WaterLevelMeter = mcpadc.open(WaterLevelChannel, {speedHz: 20000}, err => {
@@ -71,11 +73,11 @@ valve.writeSync(0);
 		const waterLevel = (reading.value * 3.3 - 0.5) * 100
 		if( waterLevel <= 200){
             console.log("Inlet Pump On");
-			swithInletPump(1) //Water In
+			swithInletPump(relayON) //Water In
 		}else{
             
             console.log("Inlet Pump OFF");
-			swithInletPump(0);
+			swithInletPump(relayOFF);
 		}
 		console.log(`Water Level: ${waterLevel}`);
 	  });
@@ -120,9 +122,9 @@ const swithOutletValve = (state) => {
 const close =  () => {
     try{
 		
-		inletPump.writeSync(0);
-		outletPump.writeSync(0);
-		valve.writeSync(0);
+		inletPump.writeSync(relayOFF);
+		outletPump.writeSync(relayOFF);
+		valve.writeSync(relayOFF);
         clearInterval(WLInterval)
 		clearInterval(DHTInterval);
        	console.log("Exit");
