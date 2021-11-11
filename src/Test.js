@@ -1,12 +1,11 @@
 const dataPin = 5;
 const mcpadc = require("mcp-spi-adc")
 const Gpio = require('onoff').Gpio;
-
+const dhtSensor =  require('node-dht-sensor').promises
 
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
 const events = require("events");
-const {TempSensor} = require("./TempSensor.js")
 
 
 //Define GPIO Pins
@@ -18,7 +17,6 @@ const TDSChannel = 6;
 const phChannel = 5
 
 //Define TempSensor
-const dht11 = new TempSensor(tempPin,11)
 
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
@@ -27,12 +25,17 @@ raspi.init(() => {
 
 
 //Define events
-dht11.eventEmmiter.on("Fan ON", () => {
-	fan.write(Cycle/100);
-})
-dht11.eventEmmiter.on("Fan OFF", () => {
-	fan.write(0);
-})
+dht11Emmitter = new EventEmitter()
+dht11Emmitter.on("Read", (Value) => {
+	if((Value.Temperature >= 23)){
+		fan.write(Cycle/100);
+		console.log("Fan Turned ON");
+	} else{
+		fan.write(0);
+		console.log("Fan Turned OFF");
+	}
+})  
+
 
 
 //DefineIntervals
@@ -79,14 +82,23 @@ outletPump.writeSync(0);
   });
 
 
-//Temp Sensor
+
+
 DHTInterval = setInterval(async () => { 
 	try{
-		// const {Temperature,Humidity} = await dht11.Read();
-		// console.log(`Outside Temp: ${Temperature} ---- Outside Humidity: ${Humidity}`)
+		const res = await dhtSensor.read(11, tempPin);
+		const Data = {
+			Temperature: res.temperature.toFixed(1),
+			Humidity : res.humidity.toFixed(1)
+		}
+		console.log(
+			`temp: ${Data.Temperature}°C, ` +
+			`humidity: ${Data.Humidity}%`
+		);
+		dht11Emmitter.emit("Read",Data); 
 	}
 	catch(err){
-		console.log(err)
+		console.log(`Error with Reading Temp Value: ${err}`)
 	}
 
 }, 2000); // the sensor can only be red every 2 seconds
