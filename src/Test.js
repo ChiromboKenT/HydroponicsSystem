@@ -8,6 +8,23 @@ const pwm = require('raspi-soft-pwm');
 const events = require("events");
 const {TempSensor} = require("./TempSensor.js")
 
+//Define TempSensor
+const dht11 = new TempSensor(tempPin,11)
+
+raspi.init(() => {
+	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
+	 // 50% Duty Cycle, aka half brightness
+  });
+
+
+//Define events
+dht11.eventEmmiter.on("Fan ON", () => {
+	fan.write(Cycle/100);
+})
+dht11.eventEmmiter.on("Fan OFF", () => {
+	fan.write(0);
+})
+
 
 //DefineIntervals
 let WLInterval;
@@ -49,6 +66,7 @@ outletPump.writeSync(0);
             console.log("Inlet Pump On");
 			swithInletPump(1) //Water In
 		}else{
+            
             console.log("Inlet Pump OFF");
 			swithInletPump(0);
 		}
@@ -56,6 +74,19 @@ outletPump.writeSync(0);
 	  });
 	}, 1000);
   });
+
+
+//Temp Sensor
+DHTInterval = setInterval(async () => { 
+	try{
+		const {Temperature,Humidity} = await dht11.Read();
+		console.log(`Outside Temp: ${Temperature} ---- Outside Humidity: ${Humidity}`)
+	}
+	catch(err){
+		console.log(err)
+	}
+
+}, 2000); // the sensor can only be red every 2 seconds
 
 const swithInletPump = (state) => {
 	inletPump.writeSync(state);
@@ -74,6 +105,7 @@ const close =  () => {
     try{
 		
         clearInterval(WLInterval)
+		clearInterval(DHTInterval);
        	console.log("Exit");
 
       }

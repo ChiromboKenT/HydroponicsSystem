@@ -74,11 +74,10 @@ const WaterLevelMeter = mcpadc.open(WaterLevelChannel, {speedHz: 20000}, err => 
 		WaterLevelMeter.read((err, reading) => {
 		if (err) throw err;
 		const waterLevel = (reading.value * 3.3 - 0.5) * 100
-		if( waterLevel <= 200 && NutrientTrigger == 0){
-			WaterFlowInstruction(0) //Water In
-		}
-		if(waterLevel >= 260 && NutrientTrigger == 0){
-			WaterFlowInstruction(1); //Water In
+		if( waterLevel <= 200){
+			swithInletPump(1) //Water In
+		}else{
+			swithInletPump(0);
 		}
 		console.log(`Water Level: ${waterLevel}`);
 	  });
@@ -92,11 +91,11 @@ const WaterLevelMeter = mcpadc.open(WaterLevelChannel, {speedHz: 20000}, err => 
 		if (err) throw err;
 		const tdsVal = (reading.value * 3.3 - 0.5) * 100 + 50;
 		if(tdsVal > 500){
-			NutrientTrigger = 1;
-			setTimeout(() => {
-				switchOff()
-				NutrientTrigger = 0;
-			},5000)
+			swithOutletValve(1)//Open Valve
+			swithOutletPump(1);
+		}else{
+			swithOutletValve(0)
+			swithOutletPump(0);
 		}
 		console.log(`TDS Level: ${tdsVal}`);
 	  });
@@ -114,19 +113,7 @@ const WaterLevelMeter = mcpadc.open(WaterLevelChannel, {speedHz: 20000}, err => 
 	}, 1000);
   });
   
-const WaterFlowInstruction = (direction) => {
-	if(direction == 1){
-		swithInletPump(0);
-		swithOutletValve(1);
-		swithOutletPump(1);
-	}
-	else{
-		swithInletPump(1);
-		swithOutletValve(0);
-		swithOutletPump(0);
-	
-	}
-}
+
 const swithInletPump = (state) => {
 	inletPump.writeSync(state);
 	flowState.inlet = state
