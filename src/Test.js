@@ -21,6 +21,7 @@ const phChannel = 5
 raspi.init(() => {
 	fan = new pwm.SoftPWM({pin:'GPIO17',frequency:120});
 	 // 50% Duty Cycle, aka half brightness
+	fan.write(0);
   });
 
 
@@ -59,7 +60,7 @@ const valve = new Gpio(21, 'out');		//Channel 3
 
 inletPump.writeSync(0);
 outletPump.writeSync(0);
-
+valve.writeSync(0);
 
 
  const WaterLevelMeter = mcpadc.open(WaterLevelChannel, {speedHz: 20000}, err => {
@@ -119,6 +120,9 @@ const swithOutletValve = (state) => {
 const close =  () => {
     try{
 		
+		inletPump.writeSync(0);
+		outletPump.writeSync(0);
+		valve.writeSync(0);
         clearInterval(WLInterval)
 		clearInterval(DHTInterval);
        	console.log("Exit");
