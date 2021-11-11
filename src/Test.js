@@ -112,10 +112,22 @@ const TDSReading = mcpadc.open(TDSChannel, {speedHz: 20000}, err => {
 		TDSReading.read((err, reading) => {
 		if (err) throw err;
 		const tdsVal = (reading.value * 3.3 - 0.5) * 100 + 50;
-	
 		console.log(`TDS Level: ${tdsVal}`);
+		if(tdsVal <= 150){
+			console.log("OUTLET VALVE ON")
+			swithOutletValve(relayON);
+			console.log("OUTLET Pump ON");
+			swithOutletPump(relayON);
+		}else{
+			console.log("OUTLET VALVE OFF ")
+			swithOutletValve(relayOFF);
+			console.log("OUTLET Pump OFF");
+			swithOutletPump(relayOFF);
+		}
+	
+		
 	  });
-	}, 1000);
+	}, 2000);
   });
 
 const swithInletPump = (state) => {
@@ -146,4 +158,5 @@ const close =  () => {
         console.log(err);
       }
  }
+process.stdin.resume();
 process.on("SIGINT", close);
