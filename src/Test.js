@@ -8,6 +8,15 @@ const pwm = require('raspi-soft-pwm');
 const events = require("events");
 const {TempSensor} = require("./TempSensor.js")
 
+
+//Define GPIO Pins
+let Cycle = 100;
+let fan;
+const tempPin = 4;
+const WaterLevelChannel = 7
+const TDSChannel = 6;
+const phChannel = 5
+
 //Define TempSensor
 const dht11 = new TempSensor(tempPin,11)
 
@@ -39,13 +48,7 @@ let PhInterval;
 	 valve : 0
  }	
 
-//Define GPIO Pins
-let Cycle = 100;
-let fan;
-const tempPin = 4;
-const WaterLevelChannel = 7
-const TDSChannel = 6;
-const phChannel = 5
+
 const inletPump  = new Gpio(26, 'out'); //Channel 1
 const outletPump = new Gpio(20, 'out');	//Channel 2
 const valve = new Gpio(21, 'out');		//Channel 3
