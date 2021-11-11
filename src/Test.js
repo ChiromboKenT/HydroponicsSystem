@@ -9,9 +9,7 @@ const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
 const EventEmitter = require("events");
 
-const controlState = {
-	auto : 1
-}
+let controlState = 0
 const options = {
 	clientId : "mqqtRaspi1k",
 }
