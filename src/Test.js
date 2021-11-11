@@ -71,7 +71,7 @@ valve.writeSync(relayOFF);
 		WaterLevelMeter.read((err, reading) => {
 		if (err) throw err;
 		const waterLevel = (reading.value * 3.3 - 0.5) * 100
-		if( waterLevel <= 200){
+		if( waterLevel >= 150){
             console.log("Inlet Pump On");
 			swithInletPump(relayON) //Water In
 		}else{
@@ -105,6 +105,18 @@ DHTInterval = setInterval(async () => {
 	}
 
 }, 2000); // the sensor can only be red every 2 seconds
+
+const TDSReading = mcpadc.open(TDSChannel, {speedHz: 20000}, err => {
+	if (err) throw err;
+	TDSInterval = setInterval(_ => {
+		TDSReading.read((err, reading) => {
+		if (err) throw err;
+		const tdsVal = (reading.value * 3.3 - 0.5) * 100 + 50;
+	
+		console.log(`TDS Level: ${tdsVal}`);
+	  });
+	}, 1000);
+  });
 
 const swithInletPump = (state) => {
 	inletPump.writeSync(state);
