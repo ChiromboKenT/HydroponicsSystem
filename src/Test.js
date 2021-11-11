@@ -114,7 +114,7 @@ const TDSReading = mcpadc.open(TDSChannel, {speedHz: 20000}, err => {
 		if (err) throw err;
 		const tdsVal = (reading.value * 3.3 - 0.5) * 100 + 50;
 		console.log(`TDS Level: ${tdsVal}`);
-		if(tdsVal <= 30){
+		if(tdsVal <= 120){
 			console.log("OUTLET VALVE ON")
 			swithOutletValve(relayON);
 			console.log("OUTLET Pump ON");
