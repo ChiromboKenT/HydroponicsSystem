@@ -2,6 +2,7 @@ const dataPin = 5;
 const mcpadc = require("mcp-spi-adc")
 const Gpio = require('onoff').Gpio;
 const dhtSensor =  require('node-dht-sensor').promises
+import process from 'process';
 
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
