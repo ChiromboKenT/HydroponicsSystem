@@ -5,7 +5,7 @@ const dhtSensor =  require('node-dht-sensor').promises
 
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
-const events = require("events");
+const EventEmitter = require("events");
 
 
 //Define GPIO Pins
