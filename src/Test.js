@@ -159,5 +159,9 @@ const close =  () => {
         console.log(err);
       }
  }
+
+ process.on('beforeExit', (code) => {
+	console.log('Process beforeExit event with code: ', code);
+  });
 process.stdin.resume();
 process.on("SIGINT", close);
