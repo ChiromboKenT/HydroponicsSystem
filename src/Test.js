@@ -11,6 +11,7 @@ const myCamera = new PiCamera({
 myCamera.record()
   .then((result) => {
     // Your video was captured
+	console.log(result)
   })
   .catch((error) => {
      // Handle your error
